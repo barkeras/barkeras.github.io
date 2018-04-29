@@ -37,6 +37,12 @@
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+	<script type="text/javascript">
+        (function () {
+            emailjs.init("user_4ohqiouOGl4CVR2LkygXx");
+        })();
+	</script>
 </head>
 
 <body>
@@ -864,7 +870,7 @@
 					<div class="contact">
 						<i class="fa fa-phone"></i>
 						<h3>Phone</h3>
-						<p>512-421-3940</p>
+						<p><a href="tel:+15132901064">513-290-1064</a></p>
 					</div>
 				</div>
 				<!-- /contact -->
@@ -874,7 +880,7 @@
 					<div class="contact">
 						<i class="fa fa-envelope"></i>
 						<h3>Email</h3>
-						<p>email@support.com</p>
+						<p><a href="mailto:dayspringbroncs@gmail.com">email@support.com</a></p>
 					</div>
 				</div>
 				<!-- /contact -->
@@ -892,11 +898,18 @@
 				<!-- contact form -->
 				<div class="col-md-8 col-md-offset-2">
 					<form class="contact-form">
-						<input type="text" class="input" placeholder="Name">
-						<input type="email" class="input" placeholder="Email">
-						<input type="text" class="input" placeholder="Subject">
-						<textarea class="input" placeholder="Message"></textarea>
-						<button class="main-btn">Send message</button>
+						<input type="text" class="input" placeholder="Name" id="name">
+						<input type="email" class="input" placeholder="Email" id="email">
+						<input type="text" class="input" placeholder="Subject" id="subject">
+						<textarea class="input" placeholder="Message" id="message"></textarea>
+						<button type="button" class="main-btn" onclick="submitContactForm()">
+							<span id="contactBtn"><i class="fa fa-paper-plane"></i> Send Message</span>
+							<div class="spinner" hidden="hidden">
+								<div class="bounce1"></div>
+								<div class="bounce2"></div>
+								<div class="bounce3"></div>
+							</div>
+						</button>
 					</form>
 				</div>
 				<!-- /contact form -->
@@ -978,6 +991,59 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/service-cards.js"></script>
 	<script type="text/javascript" src="js/footer.js"></script>
+	<script type="text/javascript" src="js/sweetalart2.all.js"></script>
+	<script type="text/javascript">
+
+
+        function submitContactForm() {
+
+            $('#contactBtn').hide();
+            $(".spinner").show();
+
+
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var subject = $("#subject").val();
+            var message = $("#message").val();
+
+
+            if (name === '' || email === '' || subject === '' || message === '') {
+                swal({
+                    title: 'Oops!',
+                    text: 'Looks like you didn\'t fill in all of the contact form fields.\nPlease fill in all fields in order to contact us.',
+                    type: 'warning'
+                });
+                $("#contactBtn").show();
+                $(".spinner").hide();
+            } else {
+                emailjs.send("gmail", "internalcontactivytech", {
+                    "from_name": name, "from_email": email,
+                    "email_subject": subject, "email_message": message
+                }).then(function (response) {
+                    swal({
+                        title: 'Success!',
+                        text: 'We\'ve successfully sent your request to Ivy Technologies!',
+                        type: 'success'
+                    });
+                    $("#contactBtn").show();
+                    $(".spinner").hide();
+                    emailjs.send("gmail", "customercontactconfirmation", {"to_email": email, "to_name": name});
+                }, function (err) {
+                    console.error("Sending email to ivy tech failed", err);
+                    swal({
+                        title: 'Uh oh!',
+                        text: 'An error occurred while attempting to submit your contact request. Please try contacting Ivy Technologies directly via the email address or phone number above the form!',
+                        type: 'error'
+                    });
+                    $("#contactBtn").show();
+                    $(".spinner").hide();
+                });
+            }
+
+        }
+
+
+	</script>
 
 
 </body>
