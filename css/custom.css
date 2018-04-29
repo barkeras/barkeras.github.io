@@ -1,0 +1,11 @@
+.row-flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.row-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
