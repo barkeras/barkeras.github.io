@@ -27,6 +27,19 @@
 
 	});
 
+    //custom button scroll
+    $(".custom-btn-scroll button[href^='#']").on('click', function (e) {
+        e.preventDefault();
+        const elementHash = $(this).attr('href');
+        var hash = elementHash;
+        if (hash) {
+            $('html, body').animate({
+                scrollTop: $(elementHash).offset().top
+            }, 600);
+        }
+
+    });
+
 	$('#back-to-top').on('click', function(){
 		$('body,html').animate({
 			scrollTop: 0
