@@ -19,27 +19,6 @@ self.addEventListener('install', function(e) {
   );
 });
 
-var cacheName = 'JTT-v2';
-var filesToCache = [
-    '/index.html',
-    '/css/sb-admin-2.min.css',
-    '/js/sb-admin-2.js',
-    '/vendor/jquery/jquery.min.js',
-    '/vendor/bootstrap/js/bootstrap.bundle.min.js',
-    '/vendor/jquery-easing/jquery.easing.min.js'
-    /* ...and other assets (jQuery, Materialize, fonts, etc) */
-];
-
-self.addEventListener('install', function(e) {
-  console.log('[ServiceWorker] Install');
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('[ServiceWorker] Caching app shell');
-      return cache.addAll(filesToCache);
-    })
-  );
-});
-
 self.addEventListener('activate', function(e) {
     console.log('[ServiceWorker] Activate');
     e.waitUntil(
